@@ -1,0 +1,108 @@
+--  7TH 
+ --JOIN TYPES
+-- * INNER JOIN 
+ --*FULL JOIN
+ --*LEFT JOIN
+ --*RIGHT JOIN
+ -- SELF JOIN
+
+
+ ---9 TH
+ -- PROCEDURES CAN RETURAN ZERO OR N VALUE    |FUNCTION  CAN ONLY RETURN SINGLE VALUE
+ --TRANSACTION POSSIBLE                       |TRANSACTION  NOT POSSIBLE  
+   
+  --3RD
+  -- WHEN EVER BUTTON CLICK, THE ACTION EXCUTE
+
+
+  --10TH
+  --IT STORED SEPERATE INDEX OF COLUMN EMPTY VALUES
+
+
+
+
+
+
+   USE ORG  
+create table WORKER1(
+WORKER_ID INT NOT NULL PRIMARY KEY,
+	FIRST_NAME VARCHAR(25),
+	LAST_NAME VARCHAR(25),
+	SALARY INT,
+	DEPARTMENT VARCHAR(25)
+	)
+	SELECT *FROM WORKER1
+		INSERT INTO WORKER1 values
+	   (1, 'Monika', 'Arora', 100000,  'HR'),
+		(2, 'Niharika', 'Verma',80000,'Admin'),
+		(3, 'Vishal', 'Singhal',300000, 'HR'),
+		(4, 'Amitabh', 'Singh',500000, 'Admin'),
+		(5, 'Vivek', 'Bhati', 500000, 'Admin')
+        (6, 'Vipul', 'Diwan', 200000,'Account')
+
+        select CONCAT(FIRST_NAME, LAST_NAME)AS 'COMPLETE_NAME' FROM WORKER1 --2ND answer
+	    select *from WORKER1 order by DEPARTMENT ---5 th 
+	    select *from WORKER1 order by FIRST_NAME ---3rd 
+        select * from WORKER1  where SALARY between 100000 and 500000----4TH ANSWER
+	 
+
+ 
+CREATE TABLE Title1 (
+	WORKER_REF_ID INT,
+	WORKER_TITLE CHAR(25),
+	AFFECTED_FROM DATETIME,
+	FOREIGN KEY (WORKER_REF_ID)
+	REFERENCES Worker(WORKER_ID)ON DELETE CASCADE
+)
+
+create trigger trg_DML
+on WORKER1
+for UPDATE
+AS
+	begin
+		print 'You cannot perform DML Operations on ORG db'
+		rollback transaction  
+	end
+
+disable trigger trg_DML on WORKER1--------6TH ANSWER
+
+
+
+	 SELECT AVG(SALARY)AS 'AVERAGE SALARY' FROM WORKER1 GROUP BY  DEPARTMENT----8TH
+	 
+BEGIN TRANSACTION
+	insert into WORKER1 values(7,'AJITH','KUMAR',39000,'DEVELOPER') 
+	SAVE TRANSACTION insert_stmt
+	delete from  WORKER1 where worker_id =7 
+    ROLLBACK TRANSACTION insert_stmt
+COMMIT TRANSACTION
+SELECT * FROM WORKER1  ------10 TH
+
+
+
+CREATE TABLE Bonus (
+	WORKER_REF_ID INT,
+	BONUS_AMOUNT INT(10),
+	BONUS_DATE DATETIME,
+	FOREIGN KEY (WORKER_REF_ID)
+		REFERENCES Worker(WORKER_ID)
+        ON DELETE CASCADE
+)
+
+INSERT INTO Bonus 
+	(WORKER_REF_ID, BONUS_AMOUNT, BONUS_DATE) VALUES
+		(001, 5000, '16-02-20'),
+		(002, 3000, '16-06-11'),
+		(003, 4000, '16-02-20'),
+		(001, 4500, '16-02-20'),
+		(002, 3500, '16-06-11');
+CREATE TABLE Title (
+	WORKER_REF_ID INT,
+	WORKER_TITLE CHAR(25),
+	AFFECTED_FROM DATETIME,
+	FOREIGN KEY (WORKER_REF_ID)
+		REFERENCES Worker(WORKER_ID)
+        ON DELETE CASCADE
+)
+
+
